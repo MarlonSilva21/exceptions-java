@@ -14,7 +14,7 @@ public class Program {
 
         Locale.setDefault(Locale.US);
 
-        Scanner sc =new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         System.out.print("Room number: ");
@@ -27,10 +27,8 @@ public class Program {
         Date checkOut = sdf.parse(sc.next());
 
         if (!checkOut.after(checkIn)) {
-
             System.out.println("Error in reservation: Check-out date must be after check-in date");
-        }
-        else{
+        } else {
             Reservation reservation = new Reservation(roomNumber, checkIn, checkOut);
 
             System.out.println("Reservation: " + reservation);
@@ -43,16 +41,12 @@ public class Program {
             System.out.print("Check-out Date: (dd/MM/yyyy): ");
             checkOut = sdf.parse(sc.next());
 
-            Date now = new Date();
+            String error = reservation.updateDates(checkIn, checkOut);
 
-            if(checkIn.before(now) || checkOut.before(now)){
-                System.out.println("Error in reservation: Reservation dates for update must be future dates");
-            }
-            else if (!checkOut.after(checkIn)){
-                System.out.println("Error in reservation: Check-out date must be after check-in date");
+            if(error != null){
+                System.out.println("Error in reservation: " + error);
             }
             else{
-                reservation.updateDates(checkIn, checkOut);
                 System.out.println("Reservation: " + reservation);
             }
         }
